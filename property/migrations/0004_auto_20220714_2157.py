@@ -3,6 +3,13 @@
 from django.db import migrations
 
 
+def check_is_building_new(apps, schema_editor):
+    Flat = apps.get_model('property', 'Flat')
+    flats = Flat.objects.all()
+    flats.filter(construction_year__gte=2015).update(is_building_new=True)
+    flats.filter(construction_year__lt=2015).update(is_building_new=False)
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -10,4 +17,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(check_is_building_new),
     ]
