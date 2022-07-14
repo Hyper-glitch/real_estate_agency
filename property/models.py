@@ -3,6 +3,8 @@ from django.utils import timezone
 
 
 class Flat(models.Model):
+    BUILDING_CHOICES = ((True, 'Новостройка'), (False, 'Старое здание'), (None, 'Неизвестно'))
+
     owner = models.CharField('ФИО владельца', max_length=200)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)
     created_at = models.DateTimeField(
@@ -46,6 +48,7 @@ class Flat(models.Model):
         null=True,
         blank=True,
         db_index=True)
+    is_building_new = models.BooleanField(choices=BUILDING_CHOICES, null=True, default=None)
 
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
