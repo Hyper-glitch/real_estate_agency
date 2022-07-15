@@ -9,3 +9,4 @@ class FlatAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
     list_display = ('address', 'price', 'is_building_new', 'construction_year', 'town')
     list_editable = ('is_building_new',)
+    list_filter = ('is_building_new', 'rooms_number', 'has_balcony')
