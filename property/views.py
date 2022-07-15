@@ -25,7 +25,7 @@ def show_flats(request):
     if max_price:
         flats = flats.filter(price__lt=max_price)
     if new_building:
-        flats = flats.filter(is_building_new=new_building) if new_building else None
+        flats = flats.filter(is_building_new=new_building)
 
     towns = Flat.objects.values_list('town', flat=True).distinct().order_by('town')
     serialized_flats = {
