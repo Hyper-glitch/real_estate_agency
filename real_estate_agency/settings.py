@@ -15,9 +15,6 @@ SECRET_KEY = env.str('SECRET_KEY', 'REPLACE_ME')
 
 DEBUG = env.bool('DEBUG', True)
 
-
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -26,7 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-
+    'phonenumber_field',
     'property.apps.PropertyConfig',
 ]
 
