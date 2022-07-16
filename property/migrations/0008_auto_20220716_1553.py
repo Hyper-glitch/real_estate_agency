@@ -11,8 +11,10 @@ def normalize_owner_phonenumber(apps, schema_editor):
         pk = values[0]
         number = values[1]
         phonenumber = phonenumbers.parse(number, region)
-        normalized_phone = f'+{phonenumber.country_code}{phonenumber.national_number}'
-        Flat.objects.filter(pk=pk).update(owner_normalized_phone=normalized_phone)
+
+        if phonenumbers.is_valid_number(phonenumber):
+            normalized_phone = f'+{phonenumber.country_code}{phonenumber.national_number}'
+            Flat.objects.filter(pk=pk).update(owner_normalized_phone=normalized_phone)
 
 
 class Migration(migrations.Migration):
