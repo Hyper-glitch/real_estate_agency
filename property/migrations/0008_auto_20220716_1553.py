@@ -7,9 +7,9 @@ def normalize_owner_phonenumber(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     region = 'RU'
     owner_phonenumbers = Flat.objects.values_list('pk', 'owners_phonenumber')
-    for value in owner_phonenumbers:
-        pk = value[0]
-        number = value[1]
+    for values in owner_phonenumbers:
+        pk = values[0]
+        number = values[1]
         phonenumber = phonenumbers.parse(number, region)
         normalized_phone = f'+{phonenumber.country_code}{phonenumber.national_number}'
         Flat.objects.filter(pk=pk).update(owner_normalized_phone=normalized_phone)
