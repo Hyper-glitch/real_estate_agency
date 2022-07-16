@@ -4,6 +4,7 @@ from django.utils import timezone
 
 
 class Flat(models.Model):
+    """Model that describes flat."""
     BUILDING_CHOICES = ((True, 'Да'), (False, 'Нет'), (None, 'Неизвестно'))
 
     owner = models.CharField('ФИО владельца', max_length=200)
@@ -52,5 +53,28 @@ class Flat(models.Model):
     is_building_new = models.BooleanField('Новостройка', choices=BUILDING_CHOICES, null=True, default=None)
     liked_by = models.ManyToManyField(User, related_name='liked_flats', blank=True, verbose_name='Кто поставил лайк')
 
+    class Meta:
+        verbose_name = "Квартира"
+        verbose_name_plural = "Квартиры"
+
     def __str__(self):
         return f'{self.town}, {self.address} ({self.price}р.)'
+
+
+class Complaint(models.Model):
+    """Model that describes complaint."""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Кто жаловался', related_name='complaints')
+    flat = models.ForeignKey(
+        Flat,
+        on_delete=models.CASCADE,
+        verbose_name='Квартира, на которую пожаловались',
+        related_name='complaints',
+    )
+    text = models.TextField(verbose_name='Текст жалобы')
+
+    class Meta:
+        verbose_name = "Жалоба"
+        verbose_name_plural = "Жалобы"
+
+    def __str__(self):
+        return f'Жалоба на квартиру {self.flat.address}'
