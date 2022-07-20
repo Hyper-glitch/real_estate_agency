@@ -19,7 +19,7 @@ def load_owners(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('property', '0008_auto_20220716_1553'),
+        ('property', '0009_auto_20220720_1522'),
     ]
 
     operations = [
