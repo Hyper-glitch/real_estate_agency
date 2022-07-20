@@ -5,19 +5,12 @@ from django.db import migrations
 
 def relate_flats2owners(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
+    Owner = apps.get_model('property', 'Owner')
     flats = Flat.objects.all()
 
     for flat in flats:
-        owners = flat.owners.all()
-        for owner in owners:
-            owner.flats.add(flat)
-
-
-def move_backward(apps, schema_editor):
-    Owner = apps.get_model('property', 'Owner')
-    for owner in Owner.objects.all():
-        owner.flats = None
-        owner.save()
+        owner, created = Owner.objects.get_or_create(full_name=flat.owner, owners_phonenumber=flat.owners_phonenumber)
+        owner.flats.add(flat)
 
 
 class Migration(migrations.Migration):
@@ -27,5 +20,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(relate_flats2owners, move_backward),
+        migrations.RunPython(relate_flats2owners),
     ]
