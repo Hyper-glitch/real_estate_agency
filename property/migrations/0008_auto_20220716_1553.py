@@ -8,8 +8,7 @@ def normalize_owner_phonenumber(apps, schema_editor):
     region = 'RU'
     owner_phonenumbers = Flat.objects.values_list('pk', 'owners_phonenumber')
     for values in owner_phonenumbers:
-        pk = values[0]
-        number = values[1]
+        pk, number = values
         phonenumber = phonenumbers.parse(number, region)
 
         if phonenumbers.is_valid_number(phonenumber):
