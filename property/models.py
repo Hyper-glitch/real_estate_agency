@@ -10,7 +10,6 @@ class Flat(models.Model):
     BUILDING_CHOICES = ((True, 'Да'), (False, 'Нет'), (None, 'Неизвестно'))
 
     owner = models.CharField('ФИО владельца', max_length=200)
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20)
     owner_normalized_phone = PhoneNumberField(blank=True, verbose_name='Нормализованный номер владельца')
     created_at = models.DateTimeField(
         'Когда создано объявление',
