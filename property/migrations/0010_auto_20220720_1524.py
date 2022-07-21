@@ -8,9 +8,7 @@ def load_owners(apps, schema_editor):
     Owner = apps.get_model('property', 'Owner')
     needed_values = Flat.objects.values_list('owner', 'owners_phonenumber', 'owner_normalized_phone')
     for values in needed_values:
-        owner = values[0]
-        phonenumber = values[1]
-        normalized_phone = values[2]
+        owner, phonenumber, normalized_phone = values
         Owner.objects.get_or_create(
             full_name=owner, owners_phonenumber=phonenumber, defaults={'owner_normalized_phone': normalized_phone},
         )
